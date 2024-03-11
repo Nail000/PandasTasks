@@ -34,13 +34,25 @@ all_data = all_data.dropna(how='all')
 
 all_data = all_data[all_data['Order Date'].str[0:2] != 'Or']
 
+all_data['Quantity Ordered'] = pd.to_numeric(all_data['Quantity Ordered'])
+
+all_data['Price Each'] = pd.to_numeric(all_data['Price Each'])
 
 ### Data Augmentation  ###
 ## Task2: Add month column ##
 
 all_data['Month'] = all_data['Order Date'].str[0:2]
 all_data['Month'] =all_data['Month'].astype('int32')
-print(all_data.head())
+# print(all_data.head())
+
+## Task3: Add sales column ##
+
+all_data['Sales'] = all_data['Quantity Ordered'] * all_data['Price Each']
+# print(all_data.head())
 
 
-### Q1
+#### Q1 ####
+
+print(all_data.groupby('Month').sum())  #answer: december was the best month for sales with 4 613 443.34 $
+
+
